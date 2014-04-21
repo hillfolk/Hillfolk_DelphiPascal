@@ -1,0 +1,89 @@
+unit httpClientExam;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, IdBaseComponent,
+  IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, IdIOHandler,
+  IdIOHandlerStream, IdThreadComponent, IdIOHandlerSocket, IdIOHandlerStack,
+  IdSSL, IdSSLOpenSSL, IdCookieManager, IdZLibCompressorBase, IdCompressorZLib,IdURI,System.JSON,
+  Vcl.Imaging.jpeg, Vcl.ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    Memo1: TMemo;
+    Button1: TButton;
+    Edit1: TEdit;
+    IdHTTP1: TIdHTTP;
+    IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
+    IdCookieManager1: TIdCookieManager;
+    httpID: TEdit;
+    passwd: TEdit;
+    Timer1: TTimer;
+    Image1: TImage;
+    procedure Button1Click(Sender: TObject);
+    procedure IdHTTP1Status(ASender: TObject; const AStatus: TIdStatus;
+      const AStatusText: string);
+    procedure IdHTTP1Connected(Sender: TObject);
+    procedure IdHTTP1Disconnected(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+s:string;
+request : string;
+Buff:TStringStream;
+lURI :TIdURI;
+LJSONObject: TJSONObject;
+begin
+s := 'A';
+try
+  request := Edit1.Text + '?'+'return_type=json'+ '&mb_id='+ httpID.Text+'&mb_password=' +passwd.Text ;
+  Buff := TStringStream.Create;
+IdHTTP1.Get(request,Buff);
+except on E: Exception do
+ShowMessage(E.ToString);
+end;
+
+Memo1.Lines.Add(TIdURI.URLDecode(s));
+LJSONObject := TJSONObject.Create;
+   LJSONObject.Parse(Buff.Bytes,0,Buff.Size);
+
+
+Memo1.Lines.Add(TIdURI.URLDecode(s));
+Memo1.Lines.Add(TIdURI.URLDecode(LJSONObject.ToString));
+
+
+
+
+end;
+
+procedure TForm1.IdHTTP1Connected(Sender: TObject);
+begin
+Memo1.Lines.Add( '연결');
+end;
+
+procedure TForm1.IdHTTP1Disconnected(Sender: TObject);
+begin
+Memo1.Lines.Add('종료');
+end;
+
+procedure TForm1.IdHTTP1Status(ASender: TObject; const AStatus: TIdStatus;
+  const AStatusText: string);
+begin
+Memo1.Lines.Add( AStatusText);
+end;
+
+end.

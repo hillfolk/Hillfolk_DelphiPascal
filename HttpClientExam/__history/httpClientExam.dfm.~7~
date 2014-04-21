@@ -1,0 +1,81 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 261
+  ClientWidth = 585
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Memo1: TMemo
+    Left = 0
+    Top = 172
+    Width = 585
+    Height = 89
+    Align = alBottom
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 0
+    ExplicitLeft = 112
+    ExplicitTop = 164
+    ExplicitWidth = 185
+  end
+  object Button1: TButton
+    Left = 502
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = #50836#52397
+    TabOrder = 1
+    OnClick = Button1Click
+  end
+  object Edit1: TEdit
+    Left = 8
+    Top = 8
+    Width = 473
+    Height = 21
+    TabOrder = 2
+    Text = 'https://ko.wikipedia.org'
+  end
+  object IdHTTP1: TIdHTTP
+    IOHandler = IdSSLIOHandlerSocketOpenSSL1
+    AllowCookies = True
+    HandleRedirects = True
+    ProxyParams.BasicAuthentication = False
+    ProxyParams.ProxyPort = 0
+    Request.ContentLength = -1
+    Request.ContentRangeEnd = -1
+    Request.ContentRangeStart = -1
+    Request.ContentRangeInstanceLength = -1
+    Request.Accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    Request.BasicAuthentication = False
+    Request.Host = 'localhost'
+    Request.UserAgent = 'Mozilla/3.0 (compatible; Indy Library)'
+    Request.Ranges.Units = 'bytes'
+    Request.Ranges = <>
+    HTTPOptions = [hoForceEncodeParams]
+    CookieManager = IdCookieManager1
+    Left = 136
+    Top = 72
+  end
+  object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
+    MaxLineAction = maException
+    Port = 0
+    DefaultPort = 0
+    SSLOptions.Mode = sslmUnassigned
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    Left = 232
+    Top = 136
+  end
+  object IdCookieManager1: TIdCookieManager
+    Left = 176
+    Top = 72
+  end
+end
